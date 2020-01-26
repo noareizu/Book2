@@ -1,0 +1,78 @@
+<body>
+	<div class="body">
+		<div class="container">
+			<div class="row">
+				<div class="col-xs-3">
+					<h2>User info</h2>
+						<div class="profile-container">
+						    <%= attachment_image_tag current_user, :profile_image, format: 'jpeg', fallback: "img/no_image.jpg", size:"100x100" %>
+						</div>
+					<table class="table">
+						<tbody><tr></tr>
+							<tr>
+								<th>name</th>
+								<th><%= current_user.name %></th>
+							</tr>
+							<tr>
+								<th>introduction</th>
+								<th><%= current_user.introduction %></th>
+							</tr>
+							<tr>
+							</tr>
+						</tbody>
+						</tbody>
+					</table>
+					<div class="row">
+						<%=link_to edit_user_path(current_user) do %>
+							<div class="col-xs-12 btn btn-default">
+							<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+							</div>
+						<% end %>
+					</div>
+
+					<h2>New book</h2>
+					<%= form_for(@newbook) do |f| %>
+						<div>
+							<label for="book_title">Title</label>
+						    <p><%= f.text_field :title, autofocus: true, class:"col-xs-12"%></p>
+						</div>
+
+						<div>
+							<label for="book_opinion">Opinion</label>
+							<p><%= f.text_area :body, autofocus: true, class:"col-xs-12" %></p>
+						</div>
+						<div>
+							<%= f.submit 'Create Book', class:"btn btn-primary col-xs-12" %>
+						</div>
+					<% end %>
+				</div>
+				<div class="col-xs-9">
+					<h2>Users</h2>
+					<table class="table">
+						<thead>
+							<tr>
+								<th>image</th>
+								<th>Title</th>
+								<th></th>
+							</tr>
+						</thead>
+
+						<% @user.each do |user| %>
+								<tr>
+									<th><%= attachment_image_tag user, :profile_image, format: 'jpeg', fallback: "img/no_image.jpg", size:"40x40" %></th>
+									<th>
+										<%= user.name %>
+									</th>
+									<th>
+										<%=link_to user_path(user.id) do %>
+										<p>Show</p>
+										<% end %>
+									</th>
+								</tr>
+							<% end %>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>

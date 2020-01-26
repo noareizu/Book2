@@ -1,0 +1,92 @@
+<body>
+	<div class="body">
+		<div class="container">
+			<%= flash[:notice] %>
+			<div class="row">
+				<div class="col-xs-3">
+					<h2>User info</h2>
+						<div class="profile-container">
+						    <%= attachment_image_tag @book.user, :profile_image, format: 'jpeg', fallback: "img/no_image.jpg", size:"100x100" %>
+						</div>
+					<table class="table">
+						<tbody><tr></tr>
+							<tr>
+								<th>name</th>
+								<th><%= @book.user.name %></th>
+							</tr>
+							<tr>
+								<th>introduction</th>
+								<th><%= @book.user.introduction %></th>
+							</tr>
+							<tr>
+							</tr>
+						</tbody>
+						</tbody>
+					</table>
+					<div class="row">
+						<% if @book.user == current_user %>
+							<%=link_to edit_user_path(current_user) do %>
+								<div class="col-xs-12 btn btn-default">
+								<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+								</div>
+							<% end %>
+							<% else %>
+							<%=link_to user_path(current_user) do %>
+								<div class="col-xs-12 btn btn-default">
+								<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+								</div>
+							<% end %>
+						<% end %>
+					</div>
+
+					<h2>New book</h2>
+					<%= form_for(@newbook) do |f| %>
+						<%if @book.errors.any? %>
+						<ul>
+							<% @book.errors.full_messaages.each do |message| %>
+							<li><%= message %></li>
+							<% end %>
+						</ul>
+						<% end %>
+						<div>
+							<label for="book_title">Title</label>
+						    <p><%= f.text_field :title, autofocus: true, class:"col-xs-12"%></p>
+						</div>
+
+						<div>
+							<label for="book_opinion">Opinion</label>
+							<p><%= f.text_area :body, autofocus: true, class:"col-xs-12"%></p>
+						</div>
+						<div>
+							<%= f.submit 'Create Book', class:"btn btn-primary col-xs-12" %>
+						</div>
+					<% end %>
+				</div>
+				<div class="col-xs-9">
+					<h2>Book detail</h2>
+					<table class="table">
+							<tr></tr>
+							<tr>
+								<th><%=link_to user_path(@book.user_id) do %>
+									<%= attachment_image_tag @book.user, :profile_image, format: 'jpeg', fallback: "img/no_image.jpg", size:"40x40" %><br>
+									<%= @book.user.name %>
+									<% end %>
+								</th>
+								<th><%= @book.title %></th>
+								<th><%= @book.body %></th>
+								<% if @book.user == current_user %>
+									<th>
+										<%= link_to "Edit",edit_book_path(@book.id), class:"btn btn-success" %>
+									</th>
+									<th>
+										<%= link_to "Destroy",book_path(@book.id),method: :delete, class:"btn btn-danger" %>
+									</th>
+								<% end %>
+							</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</body>
